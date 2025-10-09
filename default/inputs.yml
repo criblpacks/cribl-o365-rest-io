@@ -1,0 +1,40 @@
+inputs:
+  in_o365_msg_trace:
+    disabled: false
+    sendToRoutes: true
+    pqEnabled: false
+    streamtags: []
+    url: https://reports.office365.com/ecp/reportingwebservice/reporting.svc/MessageTrace
+    interval: 5
+    timeout: 300
+    disableTimeFilter: true
+    authType: oauth
+    rescheduleDroppedTasks: true
+    maxTaskReschedule: 1
+    logLevel: info
+    jobTimeout: "0"
+    keepAliveTime: 30
+    maxMissedKeepAlives: 3
+    ttl: 4h
+    ignoreGroupJobsLimit: false
+    retryRules:
+      type: backoff
+      interval: 1000
+      limit: 5
+      multiplier: 2
+      codes:
+        - 429
+        - 500
+        - 503
+      enableHeader: true
+      retryConnectTimeout: false
+      retryConnectReset: false
+    resource: https://outlook.office365.com
+    planType: enterprise_gcc
+    type: office365_msg_trace
+    clientSecret: YOUR_CLIENT_SECRET
+    tenantId: YOUR_TENANT_ID
+    clientId: YOUR_CLIENT_ID
+    metadata:
+      - name: __packsource
+        value: "'cribl-o365-rest-io.o365-msg-trace-api'"

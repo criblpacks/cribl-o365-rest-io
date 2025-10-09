@@ -1,0 +1,133 @@
+output: default
+streamtags:
+  - O365
+  - JSON
+groups:
+  M78MvL:
+    name: Initial Parsing and Timestamping
+    description: Parses the JSON object so that we can start working with the
+      fields, sets _time to the correct value
+    index: 3
+  WzbxYc:
+    name: Outputs
+    description: Select the output required, if nothing enabled standard JSON will be sent
+    index: 4
+asyncFuncTimeout: 1000
+functions:
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: >-
+        This conditioning pipeline is for use on the O365 Message Trace API
+        endpoint. The Pack will normalize the JSON data from the collector and
+        provide optional output schemas. 
+
+
+        There are three current available output formats for the data: 
+            1. Standard JSON that is formatted and timestamp normalized. 
+            2. OCSF, O365 Message Trace events fall under the Email Activity (4009) OCSF category.
+            3. Splunk, index and sourcetype can be changed within the pipeline, however default values are set in Knowledge > Variables
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: For additional details, see this pack's README under Settings.
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: "Author: Cribl Packs Team"
+  - id: eval
+    filter: "true"
+    disabled: null
+    conf:
+      keep:
+        - _*
+        - source
+        - host
+      remove:
+        - "*"
+    description: Remove all Fields prior to parsing _raw
+    groupId: M78MvL
+  - id: serde
+    filter: "true"
+    disabled: null
+    conf:
+      mode: extract
+      type: json
+      srcField: _raw
+      fieldFilterExpr: value !== '' && value !== null
+    groupId: M78MvL
+    description: Extract the JSON object from _raw removing null value fields.
+  - id: auto_timestamp
+    filter: "true"
+    disabled: null
+    conf:
+      srcField: Received
+      dstField: _time
+      defaultTimezone: UTC
+      timeExpression: time.getTime() / 1000
+      offset: 0
+      maxLen: 150
+      defaultTime: now
+      latestDateAllowed: +1week
+      earliestDateAllowed: -420weeks
+    groupId: M78MvL
+    description: Set _time to the proper timestamp and normalize timezone
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: Output to OCSF (AWS Security Lake)
+    groupId: WzbxYc
+  - id: chain
+    filter: "true"
+    disabled: true
+    conf:
+      processor: cribl_o365_ocsf_output
+    groupId: WzbxYc
+    description: Structure the events to align with the Email Activity OCSF Schem
+  - id: comment
+    filter: "true"
+    disabled: null
+    conf:
+      comment: Output to Splunk
+    groupId: WzbxYc
+  - id: serialize
+    filter: "true"
+    disabled: true
+    conf:
+      type: json
+      dstField: _raw
+      fields:
+        - "!_*"
+        - "!cribl*"
+        - "!source"
+        - "!host"
+        - "*"
+    groupId: WzbxYc
+    description: Serialize JSON to _raw
+  - id: eval
+    filter: "true"
+    disabled: true
+    conf:
+      keep:
+        - _*
+        - cribl*
+        - source
+        - host
+        - index
+        - sourcetype
+      remove:
+        - "*"
+      add:
+        - disabled: false
+          value: "index ? index : C.vars.default_splunk_index"
+          name: index
+        - disabled: false
+          value: "sourcetype ? sourcetype : C.vars.default_splunk_sourcetype"
+          name: sourcetype
+    groupId: WzbxYc
+    description: Sets the index and sourcetype for Splunk output
+description: Parse, filter and route O365 Message Trace logs

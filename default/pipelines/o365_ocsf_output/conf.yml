@@ -1,0 +1,140 @@
+output: default
+streamtags:
+  - OCSF
+groups:
+  TNIeF2:
+    name: Email Activity (4009)
+    description: Transform events into Schema for Email Activity (4009)
+    index: 0
+asyncFuncTimeout: 1000
+functions:
+  - id: eval
+    filter: "true"
+    disabled: null
+    conf:
+      add:
+        - disabled: false
+          name: time
+          value: new Date(Received).toISOString()
+        - disabled: false
+          name: email
+          value: "{}"
+        - disabled: false
+          name: email.size
+          value: Size
+        - disabled: false
+          name: email.smtp_to
+          value: RecipientAddress
+        - disabled: false
+          name: email.subject
+          value: Subject
+        - disabled: false
+          name: email.smpt_from
+          value: SenderAddress
+        - disabled: false
+          name: email.message_uid
+          value: MessageId
+        - disabled: false
+          name: status
+          value: "Status == 'Delivered' ? 'Success' : Status == 'Failure' ? 'Failure' :
+            Status"
+        - disabled: false
+          name: metadata
+          value: "{}"
+        - disabled: false
+          name: metadata.product
+          value: "{}"
+        - disabled: false
+          name: metadata.product.name
+          value: "'O365'"
+        - disabled: false
+          name: metadata.product.vendor_name
+          value: "'Microsoft'"
+        - disabled: false
+          name: metadata.version
+          value: "'1.4.0'"
+        - disabled: false
+          name: metadata.original_time
+          value: Received
+        - disabled: false
+          name: severity
+          value: "'Unknown'"
+        - disabled: false
+          name: type_uid
+          value: "400904"
+        - disabled: false
+          name: unmapped
+          value: "{}"
+        - disabled: false
+          name: unmapped.Index
+          value: Index
+        - disabled: false
+          name: unmapped.Organization
+          value: Organization
+        - disabled: false
+          name: class_uid
+          value: "4009"
+        - disabled: false
+          name: status_id
+          value: "Status == 'Delivered' ? 1 : Status == 'Failure' ? 2 : 99"
+        - disabled: false
+          name: class_name
+          value: "'Email Activity'"
+        - disabled: false
+          name: activity_id
+          value: "4"
+        - disabled: false
+          name: severity_id
+          value: "0"
+        - disabled: false
+          name: category_uid
+          value: "4"
+        - disabled: false
+          name: direction_id
+          value: "0"
+        - disabled: false
+          name: src_endpoint
+          value: "{}"
+        - disabled: false
+          name: src_endpoint.ip
+          value: FromIP
+        - disabled: false
+          name: activity_name
+          value: "'Trace'"
+        - disabled: false
+          name: category_name
+          value: "'Network Activity'"
+        - disabled: false
+          name: status_detail
+          value: Status
+        - disabled: false
+          name: direction_name
+          value: "'Unknown'"
+      keep:
+        - time
+        - email*
+        - status
+        - metadata*
+        - severity
+        - type_uid
+        - unmapped*
+        - class_uid
+        - status_id
+        - class_name
+        - activity_id
+        - severity_id
+        - category_uid
+        - direction_id
+        - src_endpoint*
+        - activity_name
+        - category_name
+        - status_detail
+        - direction_name
+        - source
+        - host
+        - _time
+      remove:
+        - "*"
+    groupId: TNIeF2
+    description: Transform events into Schema for Email Activity (4009)
+description: Transform o365 events to OCSF

@@ -1,0 +1,32 @@
+id: default
+groups: {}
+comments:
+  - id: ZNtRjE
+    comment: Matches JSON events coming from O365 Message Trace Collector
+    index: 0
+  - id: oPO7AT
+    comment: Something went wrong. We shouldn't be here
+    index: 2
+routes:
+  - id: u1pzGV
+    name: cribl_o365_message_trace
+    final: true
+    disabled: false
+    pipeline: cribl_o365_msg_trace
+    description: Base route for O365 Message Trace Events
+    enableOutputExpression: false
+    outputExpression: null
+    filter: __packsource == 'cribl-o365-rest-io.o365-msg-trace-api'
+    clones: []
+    output: default
+  - id: default
+    name: default
+    final: true
+    disabled: false
+    pipeline: main
+    description: ""
+    enableOutputExpression: false
+    outputExpression: null
+    filter: "true"
+    clones: []
+    output: default
