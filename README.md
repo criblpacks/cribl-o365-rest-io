@@ -22,7 +22,7 @@ The pack also currently includes three forms of outputs:
 
 ### Configure Source(s)
 
-Configure the Office 365 Message Trace Source, detailed instructions for configuring the source can be found at [Cribl's Github](https://github.com/criblio/Cribl-Microsoft/blob/main/KnowledgeArticles/O365AppRegistrationForCribl/O365-AppRegistration_for_Cribl.md) or [official documentation](https://docs.cribl.io/stream/sources-office365-msg-trace/).
+Configure the Office 365 Message Trace Source, detailed instructions for configuring the source can be found at [Cribl's Github](https://github.com/criblio/Cribl-Microsoft/blob/main/KnowledgeArticles/O365AppRegistrationForCribl/O365-AppRegistration_for_Cribl.md) (recommended) or [official documentation](https://docs.cribl.io/stream/sources-office365-msg-trace/).
 
 ### Configure Reductions and Output Format
 
