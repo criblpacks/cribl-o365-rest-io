@@ -9,9 +9,9 @@ This pack is designed to handle JSON data collected from the Office 365 Message 
 
 The pack also currently includes three forms of outputs:
 
-1. Normalized JSON
-2. OCSF - Primarily meant for Amazon Security Lake, the pack normalizes the data into the proper OCSF category.
-3. Splunk - default index and sourcetype supplied from Knowledge > Variables, but can be overwritten in pipeline
+* Normalized JSON (the default)
+* OCSF - Primarily meant for Amazon Security Lake, the pack normalizes the data into the proper OCSF category.
+* Splunk - default index and sourcetype supplied from Knowledge > Variables, but can be overwritten in pipeline
 
 ## Deployment
 
@@ -26,7 +26,7 @@ Configure the Office 365 Message Trace Source, detailed instructions for configu
 
 ### Configure Reductions and Output Format
 
-* Data can be configured to output data in either OCSF or normalized JSON (Splunk) format - enable *only one* format!
+* Data can be configured to output data in either normalized JSON (default), OCSF, or Splunk (`_raw` + Splunk fields) format - enable *only* one format!
 * This pack includes several functions that can help reduce events. Please make sure you evaluate the functions before enabling, to ensure vital data is not missed. 
 
 ### Configure your Destination/Update Pack Routes
