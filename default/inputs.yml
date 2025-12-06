@@ -38,3 +38,5 @@ inputs:
     metadata:
       - name: __packsource
         value: "'cribl-o365-rest-io.o365-msg-trace-api'"
+    __template_tenantId: o365_tenant_id
+    __template_clientId: o365_client_id
