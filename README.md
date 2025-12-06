@@ -3,8 +3,6 @@
 
 ## About this Pack
 
-## About this Pack
-
 This pack is built as a complete SOURCE + DESTINATION solution (identified by the IO suffix). Data collection and delivery happen entirely within the pack's context, eliminating the need to connect it to globally defined Sources and Destinations. 
 
 This pack is designed to handle JSON data collected from the Office 365 Message Trace collector source. The JSON is parsed and the timestamp normalized from the proper field within each event. 
