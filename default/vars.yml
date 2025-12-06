@@ -1,3 +1,8 @@
+o365_client_id:
+  type: string
+  lib: custom
+  description: "REQUIRED: Your Office 365 Client ID"
+  value: "'YOUR_CLIENT_ID'"
 default_splunk_index:
   type: string
   lib: custom
@@ -6,3 +11,8 @@ default_splunk_sourcetype:
   type: string
   lib: custom
   value: "'o365:reporting:messagetrace'"
+o365_tenant_id:
+  type: string
+  lib: custom
+  description: "REQUIRED: Your Office 365 Tenant ID"
+  value: "'YOUR_TENANT_ID'"
